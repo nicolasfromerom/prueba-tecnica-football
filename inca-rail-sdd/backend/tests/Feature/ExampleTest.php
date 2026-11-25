@@ -10,10 +10,9 @@ class ExampleTest extends TestCase
     /**
      * A basic test example.
      */
-    public function test_the_application_returns_a_successful_response(): void
+    public function test_health_responds_and_api_requires_authentication(): void
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->get('/up')->assertStatus(200);
+        $this->getJson('/me')->assertStatus(401)->assertJsonPath('error.code', 'UNAUTHENTICATED');
     }
 }
