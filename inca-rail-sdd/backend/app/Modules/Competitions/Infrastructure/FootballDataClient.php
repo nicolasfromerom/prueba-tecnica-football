@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Http;
 
 final class FootballDataClient implements FootballProvider
 {
+    public function __construct(private readonly RequestBudget $budget)
+    {
+    }
+
     public function competitions(): array
     {
         return $this->get('/competitions')['competitions'] ?? [];
@@ -30,6 +34,8 @@ final class FootballDataClient implements FootballProvider
             throw new ProviderFailure(503);
         }
 
+        $this->budget->reserve($token);
+
         try {
             $response = Http::baseUrl('https://api.football-data.org/v4')
                 ->withHeaders(['X-Auth-Token' => $token])
@@ -41,7 +47,9 @@ final class FootballDataClient implements FootballProvider
         }
 
         if ($response->status() === 429) {
-            throw new ProviderFailure(429, (int) $response->header('Retry-After', 60));
+            $retryAfter = (int) $response->header('Retry-After', 60);
+            $this->budget->coolDown($token, $retryAfter);
+            throw new ProviderFailure(429, $retryAfter);
         }
         if (!$response->successful() || !is_array($response->json())) {
             throw new ProviderFailure(502);
