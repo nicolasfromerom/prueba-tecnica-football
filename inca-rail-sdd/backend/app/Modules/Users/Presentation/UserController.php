@@ -26,4 +26,12 @@ final class UserController
 
         return ApiResponse::success($user, 'User created.', status: 201);
     }
+
+    public function update(UpdateUserRequest $request, int $id): JsonResponse
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->validated());
+
+        return ApiResponse::success($user->fresh(), 'User updated.');
+    }
 }
