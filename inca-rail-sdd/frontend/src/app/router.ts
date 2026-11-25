@@ -15,6 +15,7 @@ const router = createRouter({
     { path: '/players', component: () => import('../modules/players/presentation/PlayersPage.vue'), meta: { permission: ['read', 'Player'] } },
     { path: '/players/:id', component: () => import('../modules/players/presentation/PlayerDetailPage.vue'), meta: { permission: ['read', 'Player'] } },
     { path: '/users', component: () => import('../modules/users/presentation/UsersPage.vue'), meta: { permission: ['read', 'User'] } },
+    { path: '/users/new', component: () => import('../modules/users/presentation/UserFormPage.vue'), meta: { permission: ['create', 'User'] } },
     { path: '/forbidden', component: () => import('../modules/auth/presentation/ForbiddenPage.vue') },
   ],
 })
