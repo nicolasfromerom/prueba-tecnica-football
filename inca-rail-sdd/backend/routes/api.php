@@ -3,10 +3,13 @@
 use App\Modules\Auth\Presentation\LoginController;
 use App\Modules\Auth\Presentation\LogoutController;
 use App\Modules\Auth\Presentation\MeController;
+use App\Modules\Users\Presentation\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', LoginController::class);
 Route::middleware(['auth:api', 'active'])->group(function () {
     Route::post('/logout', LogoutController::class);
     Route::get('/me', MeController::class);
+    Route::get('/users', [UserController::class, 'index'])->middleware('permission:read,User');
+    Route::get('/users/{id}', [UserController::class, 'show'])->middleware('permission:read,User');
 });
