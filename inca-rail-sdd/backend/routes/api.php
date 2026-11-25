@@ -7,6 +7,7 @@ use App\Modules\Users\Presentation\UserController;
 use App\Modules\Roles\Presentation\RoleController;
 use App\Modules\Permissions\Presentation\PermissionController;
 use App\Modules\Competitions\Presentation\CompetitionController;
+use App\Modules\Teams\Presentation\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', LoginController::class);
@@ -27,4 +28,5 @@ Route::middleware(['auth:api', 'active'])->group(function () {
     Route::put('/roles/{id}/permissions', [RoleController::class, 'assignPermissions'])->middleware('permission:assign,RolePermission');
     Route::get('/competitions', [CompetitionController::class, 'index'])->middleware('permission:read,Competition');
     Route::get('/competitions/{competition_id}', [CompetitionController::class, 'show'])->middleware('permission:read,Competition');
+    Route::get('/team', [TeamController::class, 'index'])->middleware('permission:read,Team');
 });
