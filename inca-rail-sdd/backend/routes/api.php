@@ -12,4 +12,5 @@ Route::middleware(['auth:api', 'active'])->group(function () {
     Route::get('/me', MeController::class);
     Route::get('/users', [UserController::class, 'index'])->middleware('permission:read,User');
     Route::get('/users/{id}', [UserController::class, 'show'])->middleware('permission:read,User');
+    Route::post('/users', [UserController::class, 'store'])->middleware('permission:create,User');
 });

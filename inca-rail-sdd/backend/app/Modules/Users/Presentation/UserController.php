@@ -19,4 +19,11 @@ final class UserController
     {
         return ApiResponse::success(User::with('roles:id,name')->findOrFail($id));
     }
+
+    public function store(CreateUserRequest $request): JsonResponse
+    {
+        $user = User::create($request->validated());
+
+        return ApiResponse::success($user, 'User created.', status: 201);
+    }
 }
