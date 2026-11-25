@@ -40,7 +40,7 @@ final class UserController
 
     public function status(StatusRequest $request, int $id, ProtectLastAdmin $protect): JsonResponse
     {
-        $user = DB::transaction(function () use ($request, $id, $protect) {
+        $user = $protect->synchronized(fn () => DB::transaction(function () use ($request, $id, $protect) {
             $user = User::findOrFail($id);
             $active = $request->boolean('is_active');
             if (!$active) {
@@ -53,14 +53,14 @@ final class UserController
             }
 
             return $user;
-        });
+        }));
 
         return ApiResponse::success($user, 'User status updated.');
     }
 
     public function assignRoles(AssignRolesRequest $request, int $id, ProtectLastAdmin $protect): JsonResponse
     {
-        $user = DB::transaction(function () use ($request, $id, $protect) {
+        $user = $protect->synchronized(fn () => DB::transaction(function () use ($request, $id, $protect) {
             $user = User::whereKey($id)->lockForUpdate()->firstOrFail();
             $roles = Role::with('permissions')->whereIn('id', $request->validated('role_ids'))->get();
             $actor = $request->user('api');
@@ -75,7 +75,7 @@ final class UserController
             $user->roles()->sync($roles->pluck('id'));
 
             return $user->load('roles');
-        });
+        }));
 
         return ApiResponse::success($user, 'Roles assigned.');
     }
