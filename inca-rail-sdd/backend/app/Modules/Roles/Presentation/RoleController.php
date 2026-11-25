@@ -17,4 +17,9 @@ final class RoleController
     {
         return ApiResponse::success(Role::with('permissions:id,action,subject')->findOrFail($id));
     }
+
+    public function store(CreateRoleRequest $request): JsonResponse
+    {
+        return ApiResponse::success(Role::create($request->validated()), 'Role created.', status: 201);
+    }
 }
