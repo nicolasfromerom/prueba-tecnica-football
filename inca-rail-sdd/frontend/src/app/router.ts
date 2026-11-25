@@ -9,6 +9,7 @@ const router = createRouter({
     { path: '/', redirect: '/login' },
     { path: '/login', component: () => import('../modules/auth/presentation/LoginPage.vue') },
     { path: '/competitions', component: () => import('../modules/competitions/presentation/CompetitionsPage.vue'), meta: { permission: ['read', 'Competition'] } },
+    { path: '/competitions/:id', component: () => import('../modules/competitions/presentation/CompetitionDetailPage.vue'), meta: { permission: ['read', 'Competition'] } },
     { path: '/forbidden', component: () => import('../modules/auth/presentation/ForbiddenPage.vue') },
   ],
 })
