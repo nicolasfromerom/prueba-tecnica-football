@@ -14,6 +14,6 @@ onMounted(load)
 </script>
 <template>
   <div class="page-heading"><div><span class="eyebrow">ADMINISTRACIÓN / ROLES</span><h1>{{ editing ? 'Editar rol' : 'Nuevo rol' }}</h1><p>Grupo de capacidades.</p></div></div>
-  <form class="form-card" @submit.prevent="save"><v-alert v-if="error" type="error" variant="tonal" class="mb-5">{{ error }}</v-alert><v-progress-linear v-if="loading" indeterminate class="mb-5" /><v-text-field v-model="name" label="Nombre del rol" :error-messages="details.name" required maxlength="100" /><div class="d-flex ga-3"><v-btn type="submit" color="primary" :loading="saving" :disabled="loading">{{ editing ? 'Guardar cambios' : 'Crear rol' }}</v-btn><v-btn to="/roles" variant="text">Cancelar</v-btn></div></form>
+  <form v-if="!editing || can(session.profile, 'update', 'Role')" class="form-card" @submit.prevent="save"><v-alert v-if="error" type="error" variant="tonal" class="mb-5">{{ error }}</v-alert><v-progress-linear v-if="loading" indeterminate class="mb-5" /><v-text-field v-model="name" label="Nombre del rol" :error-messages="details.name" required maxlength="100" /><div class="d-flex ga-3"><v-btn type="submit" color="primary" :loading="saving" :disabled="loading">{{ editing ? 'Guardar cambios' : 'Crear rol' }}</v-btn><v-btn to="/roles" variant="text">Cancelar</v-btn></div></form>
   <RolePermissionsPanel v-if="editing && !loading && can(session.profile, 'assign', 'RolePermission') && can(session.profile, 'read', 'Permission')" :id="Number(route.params.id)" />
 </template>

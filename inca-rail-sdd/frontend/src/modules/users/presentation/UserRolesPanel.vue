@@ -4,10 +4,11 @@ import { adminApi } from '../infrastructure/adminApi'
 import type { Role } from '../domain/Admin'
 import { useSession } from '../../auth/presentation/session'
 import { ApiError } from '../../../shared/infrastructure/http'
+import { httpAuthPort } from '../../auth/infrastructure/httpAuthPort'
 const props = defineProps<{ id: number }>()
 const session = useSession(), roles = ref<Role[]>([]), selected = ref<number[]>([]), loading = ref(false), saving = ref(false), error = ref(''), success = ref('')
 async function load() { if (!session.token) return; loading.value = true; error.value = ''; try { const [all, user] = await Promise.all([adminApi.roles(session.token), adminApi.user(props.id, session.token)]); roles.value = all.data; selected.value = user.data.roles.map(role => role.id) } catch (cause) { error.value = cause instanceof ApiError ? cause.message : 'No se pudieron cargar los roles.' } finally { loading.value = false } }
-async function save() { if (!session.token) return; saving.value = true; error.value = ''; success.value = ''; try { await adminApi.setRoles(props.id, selected.value, session.token); success.value = 'Roles actualizados.' } catch (cause) { error.value = cause instanceof ApiError ? cause.message : 'No se pudieron asignar los roles.' } finally { saving.value = false } }
+async function save() { if (!session.token) return; saving.value = true; error.value = ''; success.value = ''; try { await adminApi.setRoles(props.id, selected.value, session.token); session.profile = await httpAuthPort.profile(session.token); success.value = 'Roles actualizados.' } catch (cause) { error.value = cause instanceof ApiError ? cause.message : 'No se pudieron asignar los roles.' } finally { saving.value = false } }
 onMounted(load)
 </script>
 <template>

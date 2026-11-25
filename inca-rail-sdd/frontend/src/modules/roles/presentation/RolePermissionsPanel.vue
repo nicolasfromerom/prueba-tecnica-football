@@ -4,10 +4,11 @@ import { adminApi } from '../../users/infrastructure/adminApi'
 import type { Permission } from '../../users/domain/Admin'
 import { useSession } from '../../auth/presentation/session'
 import { ApiError } from '../../../shared/infrastructure/http'
+import { httpAuthPort } from '../../auth/infrastructure/httpAuthPort'
 const props = defineProps<{ id: number }>()
 const session = useSession(), items = ref<Permission[]>([]), selected = ref<number[]>([]), loading = ref(false), saving = ref(false), error = ref(''), success = ref(''), protectedRole = ref(false)
 async function load() { if (!session.token) return; loading.value = true; error.value = ''; try { const [catalog, role] = await Promise.all([adminApi.permissions(session.token), adminApi.role(props.id, session.token)]); items.value = catalog.data; selected.value = role.data.permissions.map(item => item.id); protectedRole.value = role.data.name === 'admin' } catch (cause) { error.value = cause instanceof ApiError ? cause.message : 'No se pudieron cargar los permisos.' } finally { loading.value = false } }
-async function save() { if (!session.token) return; saving.value = true; error.value = ''; success.value = ''; try { await adminApi.setPermissions(props.id, selected.value, session.token); success.value = 'Permisos actualizados.' } catch (cause) { error.value = cause instanceof ApiError ? cause.message : 'No se pudieron asignar los permisos.' } finally { saving.value = false } }
+async function save() { if (!session.token) return; saving.value = true; error.value = ''; success.value = ''; try { await adminApi.setPermissions(props.id, selected.value, session.token); session.profile = await httpAuthPort.profile(session.token); success.value = 'Permisos actualizados.' } catch (cause) { error.value = cause instanceof ApiError ? cause.message : 'No se pudieron asignar los permisos.' } finally { saving.value = false } }
 onMounted(load)
 </script>
 <template>
