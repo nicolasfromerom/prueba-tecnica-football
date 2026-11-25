@@ -19,6 +19,7 @@ const router = createRouter({
     { path: '/users/:id/edit', component: () => import('../modules/users/presentation/UserFormPage.vue'), meta: { permission: ['read', 'User'] } },
     { path: '/roles', component: () => import('../modules/roles/presentation/RolesPage.vue'), meta: { permission: ['read', 'Role'] } },
     { path: '/roles/new', component: () => import('../modules/roles/presentation/RoleFormPage.vue'), meta: { permission: ['create', 'Role'] } },
+    { path: '/roles/:id/edit', component: () => import('../modules/roles/presentation/RoleFormPage.vue'), meta: { permission: ['read', 'Role'] } },
     { path: '/forbidden', component: () => import('../modules/auth/presentation/ForbiddenPage.vue') },
   ],
 })
