@@ -1,84 +1,84 @@
 # Tareas incrementales
 Ejecutar en orden dentro de esta lista. Frontend funcional depende del endpoint backend correspondiente. Cada tarea tiene su propio commit; validar el escenario asociado en testing/ antes de cerrar.
 
-- [ ] BACKEND-01 (B7) — Configurar Laravel/PHP, PostgreSQL, .env.example, puertos y bindings.
+- [x] BACKEND-01 (B7) — Configurar Laravel/PHP, PostgreSQL, .env.example, puertos y bindings. Laravel 13.44.1, migraciones PostgreSQL y `/up` 200; commit `953095b`.
   - Commit: `feat(backend-core): initialize laravel and clean architecture`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-02 (B6 B7) — Form Requests, Resources y manejo JSON 401/403/404/422/429/502/503.
+- [x] BACKEND-02 (B6 B7) — Contrato JSON implementado en `f1abc46`; 401/403/404/422/503 manuales y 429/502 con proveedor simulado vía HTTP (`c324ba7`).
   - Commit: `feat(backend-core): standardize json errors`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-03 (B1) — Configurar guard, claves locales y cliente de acceso personal.
+- [x] BACKEND-03 (B1) — Configurar guard, claves locales y cliente de acceso personal. Migraciones y cliente generados; commit `1f7321b`.
   - Commit: `feat(backend-auth): configure passport`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-04 (B1) — Validar correo, contraseña hash y estado; emitir token.
+- [x] BACKEND-04 (B1) — Validar correo, contraseña hash y estado; emitir token. Login válido e inválido verificados; commit `825a529`.
   - Commit: `feat(backend-auth): implement login`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-05 (B1) — Revocar token actual.
+- [x] BACKEND-05 (B1) — Revocar token actual. Reutilización devuelve 401; commit `69df9af`.
   - Commit: `feat(backend-auth): implement logout`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-06 (B2) — Migraciones users, roles, permissions y pivotes únicos; admin y consulta.
+- [x] BACKEND-06 (B2) — Migraciones users, roles, permissions y pivotes únicos; admin y consulta. Dos roles y 14 permisos sembrados; commit `226dc1c`.
   - Commit: `feat(backend-permissions): implement rbac schema and seeds`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-07 (B1 B2) — GET /me con reglas action/subject; middleware activo y autorización por operación.
+- [x] BACKEND-07 (B1 B2) — GET /me con reglas action/subject; middleware activo y autorización por operación. 401 sin token y 14 reglas admin; commit `a379bd7`.
   - Commit: `feat(backend-auth): expose profile and enforce access`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-08 (B2) — GET /users y detalle autorizado.
+- [x] BACKEND-08 (B2) — GET /users y detalle autorizado. Listado admin verificado; commit `31cf55a`.
   - Commit: `feat(backend-users): list users`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-09 (B2) — POST /users, validación y hash.
+- [x] BACKEND-09 (B2) — POST /users, validación y hash. Alta local verificada; commit `68b3159`.
   - Commit: `feat(backend-users): create user`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-10 (B2) — PUT /users/{id}, validar unicidad.
+- [x] BACKEND-10 (B2) — PUT /users/{id}, validar unicidad. Edición local verificada; commit `d3eacf1`.
   - Commit: `feat(backend-users): update user`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-11 (B2) — PATCH /users/{id}/status; revocar tokens al desactivar.
+- [x] BACKEND-11 (B2) — PATCH /users/{id}/status; revocar tokens al desactivar. Desactivación y último admin verificados; commit `ac2af83`.
   - Commit: `feat(backend-users): manage user status`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-12 (B2) — PUT /users/{id}/roles; impedir escalamiento.
+- [x] BACKEND-12 (B2) — PUT /users/{id}/roles; impedir escalamiento. Rol consulta y último admin verificados; commit `e8693f2`.
   - Commit: `feat(backend-users): assign user roles`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-13 (B2) — GET /roles y detalle.
+- [x] BACKEND-13 (B2) — GET /roles y detalle. Listado verificado; commit `975c372`.
   - Commit: `feat(backend-roles): list roles`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-14 (B2) — POST /roles.
+- [x] BACKEND-14 (B2) — POST /roles. Alta verificada; commit `cdba206`.
   - Commit: `feat(backend-roles): create role`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-15 (B2) — PUT /roles/{id}.
+- [x] BACKEND-15 (B2) — PUT /roles/{id}. Edición y protección de rol base verificadas; commit `60335de`.
   - Commit: `feat(backend-roles): update role`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-16 (B2) — GET /permissions, catálogo fijo de capacidades.
+- [x] BACKEND-16 (B2) — GET /permissions, catálogo fijo de capacidades. 14 permisos verificados; commit `0ba6458`.
   - Commit: `feat(backend-permissions): list permissions`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-17 (B2) — PUT /roles/{id}/permissions; proteger último administrador.
+- [x] BACKEND-17 (B2) — PUT /roles/{id}/permissions; proteger último administrador. Asignación verificada y rol admin protegido; commit `49412ee`.
   - Commit: `feat(backend-permissions): assign role permissions`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-18 (B4) — Migraciones y modelos competitions, teams, players y competition_team; external_id único; camiseta nullable.
+- [x] BACKEND-18 (B4) — Migraciones y modelos competitions, teams, players y competition_team; external_id único; camiseta nullable. Migración y persistencia verificadas; commit `eafad26`.
   - Commit: `feat(backend-football): implement football persistence`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-19 (B5 B7) — Única clase HTTP; token .env, timeout, mapeo, verificar cobertura real del proveedor.
+- [x] BACKEND-19 (B5 B7) — Cliente HTTP y mapeo implementados en `f52b2d9`; catálogo e importación real de Bundesliga validados con token local.
   - Commit: `feat(backend-football): implement external gateway`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-20 (B5) — Reserva atómica global, ventana móvil, contar todos los intentos; respetar 429 y Retry-After.
+- [x] BACKEND-20 (B5) — Limitador implementado en `5ce6291`; 10 de 11 reservas concurrentes permitidas, undécima bloqueada, 429 del proveedor y Retry-After verificados en `639e17e`.
   - Commit: `feat(backend-football): enforce external request budget`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-21 (B5) — TTL configurable, lock por competición, datos locales ante fallo.
+- [x] BACKEND-21 (B5) — Caché y fallback implementados en `f16ba81`; TTL y fallback probados en `639e17e`, importación real reanudada tras 429 y copia fresca reutilizada.
   - Commit: `feat(backend-football): implement cache and local fallback`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-22 (B3) — GET /competitions, catálogo persistido y fallback.
+- [x] BACKEND-22 (B3) — GET /competitions, catálogo persistido y fallback. 503 sin copia y stale con copia verificados; commit `31a6330`.
   - Commit: `feat(backend-competitions): list competitions`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-23 (B3 B4) — GET /competitions/{competition_id}; importar equipos y plantillas en transacción, sin duplicados. Consulta solo local para rol sin importación; 403 si no existe copia.
+- [x] BACKEND-23 (B3 B4) — Importación implementada en `6e1f2ea`; Bundesliga importada en vivo con 18 equipos y 522 jugadores, dos lecturas sin duplicados; idempotencia y lector local verificados con datos simulados.
   - Commit: `feat(backend-competitions): import competition`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-24 (B3) — GET /team exclusivamente local.
+- [x] BACKEND-24 (B3) — GET /team exclusivamente local. Lector y lista local verificados; commit `372e666`.
   - Commit: `feat(backend-teams): list teams`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-25 (B3) — GET /team/{team_id}, 404 si no existe.
+- [x] BACKEND-25 (B3) — GET /team/{team_id}, 404 si no existe. Detalle y 404 verificados; commit `4274280`.
   - Commit: `feat(backend-teams): show team details`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-26 (B3) — GET /players exclusivamente local.
+- [x] BACKEND-26 (B3) — GET /players exclusivamente local. Lista local y camiseta nula verificadas; commit `3cedcd1`.
   - Commit: `feat(backend-players): list players`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
-- [ ] BACKEND-27 (F3 B6) — GET /players/{player_id}, adicional necesario para detalle y 404.
+- [x] BACKEND-27 (F3 B6) — GET /players/{player_id}, adicional necesario para detalle y 404. Detalle y 404 verificados; commit `474634b`.
   - Commit: `feat(backend-players): show player details`
   - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.

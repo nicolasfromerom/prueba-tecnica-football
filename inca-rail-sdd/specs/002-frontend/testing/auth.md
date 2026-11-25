@@ -11,3 +11,5 @@ Precondiciones: entorno de prueba, datos controlados y permisos correspondientes
 - Escenario y resultado esperado: 401 de ruta protegida redirige; 403 informa; recarga exige login.
 - Estado: PENDING
 - Evidencia/commit: pendiente
+
+Evidencia parcial 2026-11-25: proxy /api/login válido y /api/logout exitosos; credencial inválida y /api/me sin token devolvieron 401. Interfaz y recarga pendientes.
