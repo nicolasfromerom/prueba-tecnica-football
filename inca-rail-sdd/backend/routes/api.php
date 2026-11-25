@@ -23,4 +23,5 @@ Route::middleware(['auth:api', 'active'])->group(function () {
     Route::post('/roles', [RoleController::class, 'store'])->middleware('permission:create,Role');
     Route::put('/roles/{id}', [RoleController::class, 'update'])->middleware('permission:update,Role');
     Route::get('/permissions', [PermissionController::class, 'index'])->middleware('permission:read,Permission');
+    Route::put('/roles/{id}/permissions', [RoleController::class, 'assignPermissions'])->middleware('permission:assign,RolePermission');
 });
