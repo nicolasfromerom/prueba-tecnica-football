@@ -67,10 +67,15 @@ export async function apiRequest<T>(
     forbiddenHandler?.()
   }
   if (!response.ok || !body?.success) {
+    const serviceMessage: Record<number, string> = {
+      429: 'Demasiadas solicitudes. Espera un momento antes de reintentar.',
+      502: 'La fuente externa no respondió correctamente. Inténtalo de nuevo más tarde.',
+      503: 'El servicio no está disponible en este momento. Inténtalo de nuevo más tarde.',
+    }
     throw new ApiError(
       response.status,
       body?.error?.code ?? 'HTTP_ERROR',
-      body?.message ?? 'No se pudo completar la solicitud.',
+      serviceMessage[response.status] ?? body?.message ?? 'No se pudo completar la solicitud.',
       body?.error?.details ?? {},
       response.headers.get('Retry-After') ? Number(response.headers.get('Retry-After')) : null,
     )
