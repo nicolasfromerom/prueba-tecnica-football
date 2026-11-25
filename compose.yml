@@ -1,0 +1,60 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-inca_rail}
+      POSTGRES_USER: ${DB_USERNAME:-inca_rail}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-local_development_only}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - development
+
+  backend:
+    build:
+      context: ./inca-rail-sdd/backend
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE:-inca_rail}
+      DB_USERNAME: ${DB_USERNAME:-inca_rail}
+      DB_PASSWORD: ${DB_PASSWORD:-local_development_only}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./inca-rail-sdd/backend:/var/www/html
+      - backend_vendor:/var/www/html/vendor
+    networks:
+      - development
+
+  frontend:
+    build:
+      context: ./inca-rail-sdd/frontend
+    depends_on:
+      - backend
+    ports:
+      - "127.0.0.1:5173:5173"
+    volumes:
+      - ./inca-rail-sdd/frontend:/app
+      - frontend_node_modules:/app/node_modules
+    networks:
+      - development
+
+networks:
+  development:
+
+volumes:
+  postgres_data:
+  backend_vendor:
+  frontend_node_modules:
