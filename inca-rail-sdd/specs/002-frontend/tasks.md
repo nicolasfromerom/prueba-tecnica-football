@@ -1,0 +1,69 @@
+# Tareas incrementales
+Ejecutar en orden dentro de esta lista. Frontend funcional depende del endpoint backend correspondiente. Cada tarea tiene su propio commit; validar el escenario asociado en testing/ antes de cerrar.
+
+- [ ] FRONTEND-01 (F1) — Vue 3, TypeScript estricto, Composition API, Vue Router, Vuetify; cliente fetch tipado.
+  - Commit: `feat(frontend-core): initialize vue and clean architecture`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-02 (F1 F5) — Layout, menú móvil y estados comunes de carga, vacío y error.
+  - Commit: `feat(frontend-ui): implement responsive layout`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-03 (F2) — Formulario, API, token en memoria, perfil y errores de credenciales.
+  - Commit: `feat(frontend-auth): implement login`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-04 (F2 F4) — Guard de rutas y helper action/subject propio; 401 limpia sesión, 403 informa; ocultar acciones.
+  - Commit: `feat(frontend-auth): enforce session and permissions`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-05 (F2) — Revocar token y limpiar sesión.
+  - Commit: `feat(frontend-auth): implement logout`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-06 (F3) — Listado y estado de importación.
+  - Commit: `feat(frontend-competitions): list competitions`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-07 (F3) — Acción autorizada y detalle con equipos; consulta local para lector.
+  - Commit: `feat(frontend-competitions): import competition`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-08 (F3) — Listado local.
+  - Commit: `feat(frontend-teams): list teams`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-09 (F3) — Detalle y plantilla.
+  - Commit: `feat(frontend-teams): show team details`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-10 (F3) — Listado con nombre, posición y camiseta.
+  - Commit: `feat(frontend-players): list players`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-11 (F3) — Detalle y datos ausentes como sin información.
+  - Commit: `feat(frontend-players): show player details`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-12 (F4) — Listado administrativo.
+  - Commit: `feat(frontend-users): list users`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-13 (F4) — Formulario y errores 422.
+  - Commit: `feat(frontend-users): create user`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-14 (F4) — Edición.
+  - Commit: `feat(frontend-users): update user`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-15 (F4) — Activar/desactivar con confirmación.
+  - Commit: `feat(frontend-users): manage user status`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-16 (F4) — Selector de roles.
+  - Commit: `feat(frontend-users): assign user roles`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-17 (F4) — Listado.
+  - Commit: `feat(frontend-roles): list roles`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-18 (F4) — Formulario.
+  - Commit: `feat(frontend-roles): create role`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-19 (F4) — Edición.
+  - Commit: `feat(frontend-roles): update role`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-20 (F4) — Catálogo de permisos.
+  - Commit: `feat(frontend-permissions): list permissions`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-21 (F4) — Selector por rol y actualización de capacidades.
+  - Commit: `feat(frontend-permissions): assign role permissions`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.
+- [ ] FRONTEND-22 (F5) — Avisos 429/502/503 y datos desactualizados; reintento manual sin bucles.
+  - Commit: `feat(frontend-ui): handle external service failures`
+  - Validación: comprobar criterio descrito y escenarios del módulo; registrar evidencia.

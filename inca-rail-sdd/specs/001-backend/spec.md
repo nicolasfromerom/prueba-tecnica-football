@@ -1,0 +1,29 @@
+# Especificación backend
+
+- **B7**: Configurar Laravel/PHP, PostgreSQL, .env.example, puertos y bindings.
+- **B6 B7**: Form Requests, Resources y manejo JSON 401/403/404/422/429/502/503.
+- **B1**: Configurar guard, claves locales y cliente de acceso personal.
+- **B1**: Validar correo, contraseña hash y estado; emitir token.
+- **B1**: Revocar token actual.
+- **B2**: Migraciones users, roles, permissions y pivotes únicos; admin y consulta.
+- **B1 B2**: GET /me con reglas action/subject; middleware activo y autorización por operación.
+- **B2**: GET /users y detalle autorizado.
+- **B2**: POST /users, validación y hash.
+- **B2**: PUT /users/{id}, validar unicidad.
+- **B2**: PATCH /users/{id}/status; revocar tokens al desactivar.
+- **B2**: PUT /users/{id}/roles; impedir escalamiento.
+- **B2**: GET /roles y detalle.
+- **B2**: POST /roles.
+- **B2**: PUT /roles/{id}.
+- **B2**: GET /permissions, catálogo fijo de capacidades.
+- **B2**: PUT /roles/{id}/permissions; proteger último administrador.
+- **B4**: Migraciones y modelos competitions, teams, players y competition_team; external_id único; camiseta nullable.
+- **B5 B7**: Única clase HTTP; token .env, timeout, mapeo, verificar cobertura real del proveedor.
+- **B5**: Reserva atómica global, ventana móvil, contar todos los intentos; respetar 429 y Retry-After.
+- **B5**: TTL configurable, lock por competición, datos locales ante fallo.
+- **B3**: GET /competitions, catálogo persistido y fallback.
+- **B3 B4**: GET /competitions/{competition_id}; importar equipos y plantillas en transacción, sin duplicados. Consulta solo local para rol sin importación; 403 si no existe copia.
+- **B3**: GET /team exclusivamente local.
+- **B3**: GET /team/{team_id}, 404 si no existe.
+- **B3**: GET /players exclusivamente local.
+- **F3 B6**: GET /players/{player_id}, adicional necesario para detalle y 404.

@@ -1,0 +1,24 @@
+# Especificación frontend
+
+- **F1**: Vue 3, TypeScript estricto, Composition API, Vue Router, Vuetify; cliente fetch tipado.
+- **F1 F5**: Layout, menú móvil y estados comunes de carga, vacío y error.
+- **F2**: Formulario, API, token en memoria, perfil y errores de credenciales.
+- **F2 F4**: Guard de rutas y helper action/subject propio; 401 limpia sesión, 403 informa; ocultar acciones.
+- **F2**: Revocar token y limpiar sesión.
+- **F3**: Listado y estado de importación.
+- **F3**: Acción autorizada y detalle con equipos; consulta local para lector.
+- **F3**: Listado local.
+- **F3**: Detalle y plantilla.
+- **F3**: Listado con nombre, posición y camiseta.
+- **F3**: Detalle y datos ausentes como sin información.
+- **F4**: Listado administrativo.
+- **F4**: Formulario y errores 422.
+- **F4**: Edición.
+- **F4**: Activar/desactivar con confirmación.
+- **F4**: Selector de roles.
+- **F4**: Listado.
+- **F4**: Formulario.
+- **F4**: Edición.
+- **F4**: Catálogo de permisos.
+- **F4**: Selector por rol y actualización de capacidades.
+- **F5**: Avisos 429/502/503 y datos desactualizados; reintento manual sin bucles.
