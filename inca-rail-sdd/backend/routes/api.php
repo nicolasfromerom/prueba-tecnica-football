@@ -26,4 +26,5 @@ Route::middleware(['auth:api', 'active'])->group(function () {
     Route::get('/permissions', [PermissionController::class, 'index'])->middleware('permission:read,Permission');
     Route::put('/roles/{id}/permissions', [RoleController::class, 'assignPermissions'])->middleware('permission:assign,RolePermission');
     Route::get('/competitions', [CompetitionController::class, 'index'])->middleware('permission:read,Competition');
+    Route::get('/competitions/{competition_id}', [CompetitionController::class, 'show'])->middleware('permission:read,Competition');
 });

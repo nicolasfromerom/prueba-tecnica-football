@@ -5,6 +5,7 @@ namespace App\Modules\Competitions\Infrastructure;
 use App\Modules\Competitions\Domain\FootballProvider;
 use App\Modules\Competitions\Domain\ProviderFailure;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 final class FootballDataClient implements FootballProvider
 {
@@ -33,6 +34,11 @@ final class FootballDataClient implements FootballProvider
         if (!is_string($token) || $token === '') {
             throw new ProviderFailure(503);
         }
+        $cacheKey = 'football-provider-response:'.hash('sha256', $token.':'.$path);
+        $cached = Cache::get($cacheKey);
+        if (is_array($cached)) {
+            return $cached;
+        }
 
         $this->budget->reserve($token);
 
@@ -55,6 +61,9 @@ final class FootballDataClient implements FootballProvider
             throw new ProviderFailure(502);
         }
 
-        return $response->json();
+        $data = $response->json();
+        Cache::put($cacheKey, $data, config('services.football_data.ttl'));
+
+        return $data;
     }
 }

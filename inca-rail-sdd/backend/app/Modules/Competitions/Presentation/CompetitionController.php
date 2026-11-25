@@ -9,6 +9,9 @@ use App\Shared\Presentation\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use App\Modules\Competitions\Application\CompetitionCache;
+use App\Modules\Competitions\Application\ImportCompetition;
+use Illuminate\Http\Request;
 
 final class CompetitionController
 {
@@ -50,5 +53,20 @@ final class CompetitionController
         }
 
         return ApiResponse::success(Competition::orderBy('name')->get(), meta: ['stale' => $stale]);
+    }
+
+    public function show(Request $request, int $competition_id, CompetitionCache $cache, ImportCompetition $import): JsonResponse
+    {
+        $user = $request->user('api');
+        if (!$user->canPerform('import', 'Competition')) {
+            $copy = Competition::where('external_id', $competition_id)->whereNotNull('synced_at')->first();
+            abort_unless($copy, 403);
+            return ApiResponse::success($copy->load('teams.players'), meta: ['stale' => true]);
+        }
+
+        [$copy, $stale] = $cache->resolve($competition_id, fn () => $import->execute($competition_id));
+
+        return ApiResponse::success($copy->load('teams.players'), meta: ['stale' => $stale])
+            ->header('Cache-Control', 'no-store');
     }
 }
