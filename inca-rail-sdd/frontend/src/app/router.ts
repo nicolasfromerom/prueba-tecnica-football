@@ -13,6 +13,7 @@ const router = createRouter({
     { path: '/teams', component: () => import('../modules/teams/presentation/TeamsPage.vue'), meta: { permission: ['read', 'Team'] } },
     { path: '/teams/:id', component: () => import('../modules/teams/presentation/TeamDetailPage.vue'), meta: { permission: ['read', 'Team'] } },
     { path: '/players', component: () => import('../modules/players/presentation/PlayersPage.vue'), meta: { permission: ['read', 'Player'] } },
+    { path: '/players/:id', component: () => import('../modules/players/presentation/PlayerDetailPage.vue'), meta: { permission: ['read', 'Player'] } },
     { path: '/forbidden', component: () => import('../modules/auth/presentation/ForbiddenPage.vue') },
   ],
 })
