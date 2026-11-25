@@ -3,11 +3,31 @@ import { computed, ref } from 'vue'
 import { useDisplay } from 'vuetify'
 import { can } from '../modules/auth/application/can'
 import { useSession } from '../modules/auth/presentation/session'
+import { clearSession } from '../modules/auth/presentation/session'
+import { useRouter } from 'vue-router'
+import { logout } from '../modules/auth/application/logout'
+import { httpAuthPort } from '../modules/auth/infrastructure/httpAuthPort'
 
 const { smAndDown } = useDisplay()
 const drawer = ref(true)
 const mobile = computed(() => smAndDown.value)
 const session = useSession()
+const router = useRouter()
+const loggingOut = ref(false)
+
+async function signOut() {
+  if (!session.token || loggingOut.value) return
+  loggingOut.value = true
+  try {
+    await logout(httpAuthPort, session.token)
+  } catch {
+    // Clear the local session even if the server cannot be reached.
+  } finally {
+    clearSession()
+    loggingOut.value = false
+    await router.push('/login')
+  }
+}
 
 const sections = [
   { title: 'Competiciones', to: '/competitions', mark: '01', subject: 'Competition' },
@@ -46,7 +66,8 @@ const visibleSections = computed(() => sections.filter((item) => can(session.pro
     <v-btn v-if="mobile" variant="text" aria-label="Abrir menú" @click="drawer = !drawer">☰</v-btn>
     <span class="topbar-context">INCA RAIL <span>/</span> PANEL DE FÚTBOL</span>
     <v-spacer />
-    <span class="topbar-tag">TEMPORADA ACTUAL</span>
+    <span class="topbar-user">{{ session.profile?.name }}</span>
+    <v-btn variant="text" class="topbar-logout" :loading="loggingOut" @click="signOut">Salir</v-btn>
   </v-app-bar>
 
   <v-main class="app-main">
