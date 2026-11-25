@@ -10,6 +10,7 @@ const router = createRouter({
     { path: '/login', component: () => import('../modules/auth/presentation/LoginPage.vue') },
     { path: '/competitions', component: () => import('../modules/competitions/presentation/CompetitionsPage.vue'), meta: { permission: ['read', 'Competition'] } },
     { path: '/competitions/:id', component: () => import('../modules/competitions/presentation/CompetitionDetailPage.vue'), meta: { permission: ['read', 'Competition'] } },
+    { path: '/teams', component: () => import('../modules/teams/presentation/TeamsPage.vue'), meta: { permission: ['read', 'Team'] } },
     { path: '/forbidden', component: () => import('../modules/auth/presentation/ForbiddenPage.vue') },
   ],
 })
