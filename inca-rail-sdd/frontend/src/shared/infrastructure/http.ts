@@ -28,9 +28,14 @@ export class ApiError extends Error {
 }
 
 let unauthorizedHandler: (() => void) | null = null
+let forbiddenHandler: (() => void) | null = null
 
 export function onUnauthorized(handler: () => void): void {
   unauthorizedHandler = handler
+}
+
+export function onForbidden(handler: () => void): void {
+  forbiddenHandler = handler
 }
 
 export async function apiRequest<T>(
@@ -57,6 +62,9 @@ export async function apiRequest<T>(
   const body = (await response.json().catch(() => null)) as ApiEnvelope<T> | null
   if (response.status === 401 && path !== '/login') {
     unauthorizedHandler?.()
+  }
+  if (response.status === 403) {
+    forbiddenHandler?.()
   }
   if (!response.ok || !body?.success) {
     throw new ApiError(
