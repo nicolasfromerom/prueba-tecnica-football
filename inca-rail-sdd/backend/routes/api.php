@@ -15,4 +15,5 @@ Route::middleware(['auth:api', 'active'])->group(function () {
     Route::post('/users', [UserController::class, 'store'])->middleware('permission:create,User');
     Route::put('/users/{id}', [UserController::class, 'update'])->middleware('permission:update,User');
     Route::patch('/users/{id}/status', [UserController::class, 'status'])->middleware('permission:status,User');
+    Route::put('/users/{id}/roles', [UserController::class, 'assignRoles'])->middleware('permission:assign,UserRole');
 });

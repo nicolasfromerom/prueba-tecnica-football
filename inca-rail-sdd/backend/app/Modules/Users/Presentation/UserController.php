@@ -7,6 +7,7 @@ use App\Shared\Presentation\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use App\Modules\Roles\Application\ProtectLastAdmin;
 use Illuminate\Support\Facades\DB;
+use App\Modules\Roles\Infrastructure\Role;
 
 final class UserController
 {
@@ -55,5 +56,27 @@ final class UserController
         });
 
         return ApiResponse::success($user, 'User status updated.');
+    }
+
+    public function assignRoles(AssignRolesRequest $request, int $id, ProtectLastAdmin $protect): JsonResponse
+    {
+        $user = DB::transaction(function () use ($request, $id, $protect) {
+            $user = User::whereKey($id)->lockForUpdate()->firstOrFail();
+            $roles = Role::with('permissions')->whereIn('id', $request->validated('role_ids'))->get();
+            $actor = $request->user('api');
+            foreach ($roles as $role) {
+                foreach ($role->permissions as $permission) {
+                    abort_unless($actor->canPerform($permission->action, $permission->subject), 403);
+                }
+            }
+            if ($user->roles()->where('name', 'admin')->exists() && !$roles->contains('name', 'admin')) {
+                $protect->ensureAnotherActiveAdmin($user);
+            }
+            $user->roles()->sync($roles->pluck('id'));
+
+            return $user->load('roles');
+        });
+
+        return ApiResponse::success($user, 'Roles assigned.');
     }
 }
