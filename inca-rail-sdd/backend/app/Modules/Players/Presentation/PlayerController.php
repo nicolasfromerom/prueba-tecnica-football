@@ -12,4 +12,9 @@ final class PlayerController
     {
         return ApiResponse::success(Player::with('team:id,external_id,name')->orderBy('name')->get());
     }
+
+    public function show(int $player_id): JsonResponse
+    {
+        return ApiResponse::success(Player::with('team')->where('external_id', $player_id)->firstOrFail());
+    }
 }

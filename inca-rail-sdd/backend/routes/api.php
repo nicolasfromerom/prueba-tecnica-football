@@ -32,4 +32,5 @@ Route::middleware(['auth:api', 'active'])->group(function () {
     Route::get('/team', [TeamController::class, 'index'])->middleware('permission:read,Team');
     Route::get('/team/{team_id}', [TeamController::class, 'show'])->middleware('permission:read,Team');
     Route::get('/players', [PlayerController::class, 'index'])->middleware('permission:read,Player');
+    Route::get('/players/{player_id}', [PlayerController::class, 'show'])->middleware('permission:read,Player');
 });
