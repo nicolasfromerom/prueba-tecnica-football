@@ -6,6 +6,7 @@ use App\Modules\Auth\Presentation\MeController;
 use App\Modules\Users\Presentation\UserController;
 use App\Modules\Roles\Presentation\RoleController;
 use App\Modules\Permissions\Presentation\PermissionController;
+use App\Modules\Competitions\Presentation\CompetitionController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', LoginController::class);
@@ -24,4 +25,5 @@ Route::middleware(['auth:api', 'active'])->group(function () {
     Route::put('/roles/{id}', [RoleController::class, 'update'])->middleware('permission:update,Role');
     Route::get('/permissions', [PermissionController::class, 'index'])->middleware('permission:read,Permission');
     Route::put('/roles/{id}/permissions', [RoleController::class, 'assignPermissions'])->middleware('permission:assign,RolePermission');
+    Route::get('/competitions', [CompetitionController::class, 'index'])->middleware('permission:read,Competition');
 });

@@ -8,6 +8,7 @@ use App\Shared\Presentation\ApiResponse;
 use App\Shared\Presentation\ForceJson;
 use App\Modules\Auth\Presentation\RequireActive;
 use App\Modules\Permissions\Presentation\RequirePermission;
+use App\Modules\Competitions\Domain\ProviderFailure;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -38,6 +39,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 $error instanceof ValidationException => 422,
                 $error instanceof AuthenticationException => 401,
                 $error instanceof ModelNotFoundException => 404,
+                $error instanceof ProviderFailure => $error->status,
                 $error instanceof HttpExceptionInterface => $error->getStatusCode(),
                 default => 500,
             };
@@ -63,6 +65,11 @@ return Application::configure(basePath: dirname(__DIR__))
             };
             $details = $error instanceof ValidationException ? $error->errors() : [];
 
-            return ApiResponse::error($code, $message, $status, $details);
+            $response = ApiResponse::error($code, $message, $status, $details);
+            if ($error instanceof ProviderFailure && $error->retryAfter !== null) {
+                $response->headers->set('Retry-After', (string) $error->retryAfter);
+            }
+
+            return $response;
         });
     })->create();
