@@ -5,6 +5,7 @@ use App\Modules\Auth\Presentation\LogoutController;
 use App\Modules\Auth\Presentation\MeController;
 use App\Modules\Users\Presentation\UserController;
 use App\Modules\Roles\Presentation\RoleController;
+use App\Modules\Permissions\Presentation\PermissionController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', LoginController::class);
@@ -21,4 +22,5 @@ Route::middleware(['auth:api', 'active'])->group(function () {
     Route::get('/roles/{id}', [RoleController::class, 'show'])->middleware('permission:read,Role');
     Route::post('/roles', [RoleController::class, 'store'])->middleware('permission:create,Role');
     Route::put('/roles/{id}', [RoleController::class, 'update'])->middleware('permission:update,Role');
+    Route::get('/permissions', [PermissionController::class, 'index'])->middleware('permission:read,Permission');
 });
