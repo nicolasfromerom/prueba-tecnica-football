@@ -6,6 +6,8 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use App\Shared\Presentation\ApiResponse;
 use App\Shared\Presentation\ForceJson;
+use App\Modules\Auth\Presentation\RequireActive;
+use App\Modules\Permissions\Presentation\RequirePermission;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -21,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->prepend(ForceJson::class);
+        $middleware->alias(['active' => RequireActive::class, 'permission' => RequirePermission::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
