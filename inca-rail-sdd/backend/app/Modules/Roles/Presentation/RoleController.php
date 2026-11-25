@@ -22,4 +22,13 @@ final class RoleController
     {
         return ApiResponse::success(Role::create($request->validated()), 'Role created.', status: 201);
     }
+
+    public function update(UpdateRoleRequest $request, int $id): JsonResponse
+    {
+        $role = Role::findOrFail($id);
+        abort_if(in_array($role->name, ['admin', 'consulta'], true) && $request->validated('name') !== $role->name, 403);
+        $role->update($request->validated());
+
+        return ApiResponse::success($role, 'Role updated.');
+    }
 }
