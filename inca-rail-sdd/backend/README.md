@@ -2,13 +2,15 @@
 
 API Laravel 13 con PostgreSQL y tokens personales de Passport. Todos los comandos PHP y Composer se ejecutan dentro de Docker. Desde la raíz del repositorio:
 
+Copie `.env.example` a `.env` en la raíz y `inca-rail-sdd/backend/.env.example` a `inca-rail-sdd/backend/.env`. Defina la misma contraseña local de PostgreSQL en ambos archivos (`DB_PASSWORD`); ninguno se versiona. Configure también `ADMIN_EMAIL` y `ADMIN_PASSWORD` en el `.env` del backend.
+
 ```sh
 docker compose build backend
 docker compose up -d db
-docker compose run --rm --no-deps backend sh -lc 'test -f .env || cp .env.example .env; composer install --no-interaction; php artisan key:generate; php artisan migrate --force; php artisan passport:keys; php artisan passport:client --personal --name="Inca Rail Personal Access" --no-interaction'
+docker compose run --rm --no-deps backend sh -lc 'composer install --no-interaction; php artisan key:generate; php artisan migrate --force; php artisan passport:keys; php artisan passport:client --personal --name="Inca Rail Personal Access" --no-interaction'
 ```
 
-Antes de `db:seed`, configure `ADMIN_EMAIL` y `ADMIN_PASSWORD` en `inca-rail-sdd/backend/.env` (archivo local ignorado). Después ejecute:
+Después ejecute:
 
 ```sh
 docker compose run --rm backend php artisan db:seed --force

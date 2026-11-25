@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_DB: ${DB_DATABASE:-inca_rail}
       POSTGRES_USER: ${DB_USERNAME:-inca_rail}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-local_development_only}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the local root .env}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 5s
@@ -26,7 +26,7 @@ services:
       DB_PORT: 5432
       DB_DATABASE: ${DB_DATABASE:-inca_rail}
       DB_USERNAME: ${DB_USERNAME:-inca_rail}
-      DB_PASSWORD: ${DB_PASSWORD:-local_development_only}
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the local root .env}
     depends_on:
       db:
         condition: service_healthy
