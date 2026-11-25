@@ -11,6 +11,10 @@ use App\Modules\Teams\Presentation\TeamController;
 use App\Modules\Players\Presentation\PlayerController;
 use Illuminate\Support\Facades\Route;
 
+foreach (['id', 'competition_id', 'team_id', 'player_id'] as $parameter) {
+    Route::pattern($parameter, '[0-9]+');
+}
+
 Route::post('/login', LoginController::class);
 Route::middleware(['auth:api', 'active'])->group(function () {
     Route::post('/logout', LogoutController::class);
