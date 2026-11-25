@@ -4,6 +4,7 @@ return [
 
     'football_data' => [
         'token' => env('FOOTBALL_DATA_TOKEN'),
+        'ttl' => (int) env('FOOTBALL_CACHE_TTL', 86400),
     ],
 
     /*
