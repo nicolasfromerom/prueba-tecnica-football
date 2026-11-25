@@ -5,6 +5,8 @@ namespace App\Modules\Users\Presentation;
 use App\Models\User;
 use App\Shared\Presentation\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use App\Modules\Roles\Application\ProtectLastAdmin;
+use Illuminate\Support\Facades\DB;
 
 final class UserController
 {
@@ -33,5 +35,25 @@ final class UserController
         $user->update($request->validated());
 
         return ApiResponse::success($user->fresh(), 'User updated.');
+    }
+
+    public function status(StatusRequest $request, int $id, ProtectLastAdmin $protect): JsonResponse
+    {
+        $user = DB::transaction(function () use ($request, $id, $protect) {
+            $user = User::findOrFail($id);
+            $active = $request->boolean('is_active');
+            if (!$active) {
+                $protect->ensureAnotherActiveAdmin($user);
+            }
+            $user->is_active = $active;
+            $user->save();
+            if (!$active) {
+                $user->tokens()->update(['revoked' => true]);
+            }
+
+            return $user;
+        });
+
+        return ApiResponse::success($user, 'User status updated.');
     }
 }
