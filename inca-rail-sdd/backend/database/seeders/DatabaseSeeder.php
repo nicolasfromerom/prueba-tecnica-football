@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Modules\Permissions\Domain\Capabilities;
+use App\Modules\Permissions\Infrastructure\Permission;
+use App\Modules\Roles\Infrastructure\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,11 +18,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        foreach (Capabilities::CATALOG as [$action, $subject]) {
+            Permission::firstOrCreate(compact('action', 'subject'));
+        }
+        $admin = Role::firstOrCreate(['name' => 'admin']);
+        $reader = Role::firstOrCreate(['name' => 'consulta']);
+        $admin->permissions()->sync(Permission::pluck('id'));
+        $reader->permissions()->sync(Permission::where('action', 'read')->whereIn('subject', ['Competition', 'Team', 'Player'])->pluck('id'));
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        if (env('ADMIN_EMAIL') && env('ADMIN_PASSWORD')) {
+            $user = User::firstOrCreate(['email' => env('ADMIN_EMAIL')], [
+                'name' => 'Administrator',
+                'password' => env('ADMIN_PASSWORD'),
+            ]);
+            $user->roles()->syncWithoutDetaching([$admin->id]);
+        }
     }
 }
